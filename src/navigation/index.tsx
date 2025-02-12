@@ -19,7 +19,7 @@ const HomeTabs = createBottomTabNavigator({
     Home: {
       screen: Home,
       options: {
-        title: 'Feed',
+        title: 'Home',
         tabBarIcon: ({ color, size }) => (
           <Image
             source={newspaper}
@@ -62,12 +62,12 @@ const RootStack = createNativeStackNavigator({
     Profile: {
       screen: Profile,
       linking: {
-        path: ':user(@[a-zA-Z0-9-_]+)',
+        path: ':zodiac(@[a-zA-Z]+)',
         parse: {
-          user: (value) => value.replace(/^@/, ''),
+          zodiac: (value) => value.replace(/^@/, ''),
         },
         stringify: {
-          user: (value) => `@${value}`,
+          zodiac: (value) => `@${value}`,
         },
       },
     },

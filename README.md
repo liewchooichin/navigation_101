@@ -1,3 +1,40 @@
+# My Notes
+
+# Templates
+
+This template is created from the following:
+
+```
+npx create-expo-app@latest --template react-navigation/template
+```
+
+[Horoscope API](https://horoscope-app-api.vercel.app/)
+
+```
+curl -X 'GET' \
+  'https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=Virgo&day=TODAY' \
+  -H 'accept: application/json'
+```
+
+```
+
+```
+https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=Virgo&day=TODAY
+```
+	
+Response body
+Download
+{
+  "data": {
+    "date": "Feb 11, 2025",
+    "horoscope_data": "If you don't understand something, ask, Virgo. If it looks different to you, ask why that is. Your curiosity is high, especially when it comes to the unconventional, and even more if it's revolutionary. The rebel in you will feel new purpose, and you may be tempted to throw a stick in the spokes of an old carriage that continues to head down the same old boring path."
+  },
+  "status": 200,
+  "success": true
+}
+```
+
+
 # Starter Template with React Navigation
 
 This is a minimal starter template for React Native apps using Expo and React Navigation.

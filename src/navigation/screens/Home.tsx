@@ -1,15 +1,26 @@
 import { Button, Text } from '@react-navigation/elements';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+
+
 
 export function Home() {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <Text>Open up 'src/App.tsx' to start working on your app!</Text>
-      <Button screen="Profile" params={{ user: 'jane' }}>
-        Go to Profile
+      <Text style={[styles.title]}>Some inspirations</Text>
+      <Text>Daily Horoscope</Text>
+      
+      <Button 
+        /*style={[styles.button]} */
+        screen="Profile" 
+        params={{ zodiac: 'Aries' }}>
+        Aries
       </Button>
-      <Button screen="Settings">Go to Settings</Button>
+      <Button 
+        screen="Profile" 
+        params={{ zodiac: 'Taurus'}}>
+        Taurus
+      </Button>
     </View>
   );
 }
@@ -21,4 +32,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
+  title: {
+    textAlign: "center"
+  },
+  button: {
+    fontWeight: "bold",
+  }
 });
