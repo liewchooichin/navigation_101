@@ -34,6 +34,11 @@ Download
 }
 ```
 
+Order of the zodiac buttons according to the following:
+
+- The sequence of Western zodiac signs is: Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, and Pisces. 
+
+
 
 # Starter Template with React Navigation
 

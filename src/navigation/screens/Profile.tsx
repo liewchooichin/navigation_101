@@ -53,7 +53,7 @@ export function Profile({ route }: Props) {
         onPress={()=>navigation.goBack()}>
         <Text style={styles.buttonLabel}>   
           Back
-          </Text>
+        </Text>
       </Pressable>
       
     </ScrollView>
