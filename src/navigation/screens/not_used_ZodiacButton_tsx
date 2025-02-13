@@ -1,0 +1,76 @@
+import { StyleSheet, View, Text, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
+// This is not used.
+// The list.map(item, index) would not work here because
+// I am using two items at a time.
+// The list.map() can only return one item at a time.
+
+
+
+// const of zodiac sign
+const zodiac_list = ["Aries", "Taurus", "Gemini", "Cancer", 
+	"Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", 
+	"Capricorn", "Aquarius", "Pisces"];
+
+export default function ZodiacButton({navigation}){
+
+	// for navigation
+	//navigation = useNavigation();
+
+	const buttons = zodiac_list.map( (item, index) => {	 
+		<View style={[styles.twoColumns, styles.buttonContainer]}>
+			<Pressable 
+			style={[styles.button]}
+			onPressIn={() => navigation.navigate('Profile', { zodiac: item })}
+			>
+				<Text style={[styles.buttonLabel]}>{item}</Text>
+			</Pressable>
+			<Pressable 
+			style={[styles.button]}
+			onPressIn={() => navigation.navigate('Profile', { zodiac: item })}
+			>
+			<Text style={[styles.buttonLabel]}>{item}</Text>
+			</Pressable>
+		</View>
+		
+	});
+
+	// return the buttons
+	return buttons;
+}
+
+// styles
+const styles = StyleSheet.create({
+	twoColumns: {
+		flexDirection: "row",
+		flex: 1,
+		gap: 10,
+		alignItems: "center",
+		//justifyContent: "flex-start"
+	  },
+	  buttonContainer: {
+		//flex: 1,
+		//width: 80,
+		//height: 28,
+		//marginHorizontal: 20,
+		alignItems: "flex-start",
+		//justifyContent: 'flex-start',
+		padding: 3,
+	  },
+	  button: {
+		//flex: 1,
+		borderRadius: 10,
+		width: '45%',
+		//height: '100%',
+		//alignItems: 'center',
+		justifyContent: 'center',
+		flexDirection: 'row',
+		backgroundColor: "blue",
+		padding: 10,
+	  },
+	  buttonLabel: {
+		color: '#fff',
+		fontSize: 28,
+	  },  
+});

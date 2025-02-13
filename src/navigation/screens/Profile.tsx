@@ -48,6 +48,7 @@ export function Profile({ route }: Props) {
       <Text style={[styles.title]}>{route.params.zodiac}</Text>
       <Text style={[styles.text]}>{data}</Text>
       
+      <View style={[styles.buttonContainer]}>
       <Pressable 
         style={styles.button} 
         onPress={()=>navigation.goBack()}>
@@ -55,7 +56,7 @@ export function Profile({ route }: Props) {
           Back
         </Text>
       </Pressable>
-      
+      </View>
     </ScrollView>
   );
 }
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     //width: 80,
     //height: 28,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 3,

@@ -1,63 +1,140 @@
 import { Text } from '@react-navigation/elements';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView, Pressable } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Image } from "expo-image";
 
-import initialImage from "../../assets/emoji5.png";
+
+// Image URL
+const IMAGE_URL_START = "https://zenquotes.io/api/image/";
+const QUOTE_URL = "https://zenquotes.io/api/quotes/";
+
+// get a random key for the quote image generation
+function randomKey(){
+  return (Math.floor(Math.random() * 1000000));
+}
+// create the random key url
+function getRandomImageUrl(){
+  return (IMAGE_URL_START + `${randomKey()}`);
+}
 
 export function Quotes() {
+
   // states
-  const [quote, setQuote] = useState("Quote");
-  const [author, setAuthor] = useState("Author");
-  const [imageSource, setImageSource] = useState(initialImage);
-  // fetch api
-  const URL_QUOTE = "https://zenquotes.io/api/image/";
-  const RANDOM_KEY = 9001;
+  // for the image source
+  const [sourceUrl, setSourceUrl] = useState(IMAGE_URL_START);
+  // get an array of quotes, if user wants to get a new quote,
+  // get it from the array.
+  const [quoteArray, setQuoteArray] = useState([]);
+  // a single quote from the array
+  const [singleQuote, setSingleQuote] = useState("");
+  const [singleAuthor, setSingleAuthor] = useState("");
+  // index into the quote array
+  const [quoteIndex, setQuoteIndex] = useState(0);
+  // state of loading the api
+  const [isLoading, setIsLoading] = useState(false);
 
-  async function getApi(){
-    const response = await fetch(URL_QUOTE);
-    const blobData = await response.blob();
-    const objectUrl = URL.createObjectURL(blobData);
-    setImageSource(objectUrl);
+  async function getQuoteApi(){
+    try{
+      setIsLoading(true);
+      const response = await fetch(QUOTE_URL);
+      const jsonData = await response.json();
+      setQuoteArray(jsonData);
+      setSingleQuote(jsonData[0]["q"]);
+      setSingleAuthor(jsonData[0]["a"]);
+    } 
+    catch(err){
+      console.log("Error in fetching quotes.")
+    } 
+    finally {
+      setIsLoading(false);
+    }
   }
-
-  // use effect
+  // load the quote array
   useEffect(
-    () => { getApi() },
+    () => {getQuoteApi()},
     []
   );
 
-  return (
-    <View style={styles.container}>
+  // get the next quote
+  function getNextQuote(){
+    // get the quote array size
+    const len = quoteArray.length;
+    let nextIndex = quoteIndex + 1;
+    // if the index is already at the last
+    // index, reset it to the beginning
+    if (nextIndex > len){
+      nextIndex = 0;
+    }
+    setQuoteIndex(nextIndex);
+    setSingleQuote(quoteArray[quoteIndex]["q"]);
+    setSingleAuthor(quoteArray[quoteIndex]["a"]);
+  }
   
-      <View style={[styles.imageContainer]}>
+
+  return (
+    <ScrollView>
+      
+      <View style={[styles.container, styles.imageContainer]}>
       <Image
         style={[styles.image]}
-        source={imageSource}
+        source={{uri: sourceUrl}}
+        alt="Loading ..."
       ></Image>
       </View>
 
+      <View style={[styles.buttonContainer]}>
+      <Pressable 
+        style={[styles.button]}
+        onPressIn={() => (setSourceUrl(getRandomImageUrl()))}
+      >
+        <Text style={[styles.buttonLabel]}>Another image</Text>
+      </Pressable>
+      </View>
+
+      <View style={[styles.textContainer]}>     
+      {
+        (isLoading===true) && 
+        (
+          <Text style={[styles.smalltext]}>Loading ...</Text>
+        )
+      }
+      <Text style={[styles.text]}>
+        {singleQuote}
+      </Text>
+      <Text style={[styles.authorContainer, styles.authorText]}>
+        {singleAuthor}
+      </Text>
     </View>
+    <View style={[styles.buttonContainer]}>
+      <Pressable 
+        style={[styles.button]}
+        onPressIn={() => getNextQuote()}
+      >
+        <Text style={[styles.buttonLabel]}>Another quote</Text>
+      </Pressable>
+      </View>
+    </ScrollView>
   );
 }
+
+// NOTE: The image style need to use resizeMode in order
+// to see the whole image.
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     gap: 10,
   },
   imageContainer: {
-    //flexDirection: "column",
-    flex: 1,
-    justifyContent: "center",
-    alignSelf: "stretch",
+    //flex: 1,
   },
   image: {
-    width: "100%",
-    height: "100%",
-    //objectFit: "cover",
+    width: 356,
+    height: 280,
+    //resizeMode: "contain",
   },
   title: {
     textAlign: "center",
@@ -66,16 +143,37 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    gap: 10,
+  },
   text: {
     margin: 15,
-    fontSize: 20,
-    lineHeight: 35,
+    fontSize: 36,
+    lineHeight: 40,
+  },
+  smalltext: {
+    textAlign: "center",
+    width: "100%",
+    margin: 0,
+    fontSize: 14,
+  },
+  authorContainer: {
+    flex: 1,
+    alignSelf: 'flex-end',
+    gap: 2,
+  },
+  authorText: {
+    margin: 15,
+    fontSize: 28,
   },
   buttonContainer: {
     flex: 1,
     //width: 80,
     //height: 28,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 3,
