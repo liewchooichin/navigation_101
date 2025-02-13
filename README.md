@@ -1,5 +1,11 @@
 # My Notes
 
+# TODO
+
+- Separate the image and the quote into different page.
+- Add a About page.
+- Use icons for the horoscope and the "Get another one" buttons".
+
 # Templates
 
 This template is created from the following:
