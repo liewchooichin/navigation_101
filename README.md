@@ -1,10 +1,15 @@
 # My Notes
 
-# TODO
+# Screenshots
 
-- Separate the image and the quote into different page.
-- Add a About page.
-- Use icons for the horoscope and the "Get another one" buttons".
+## Horoscope
+
+![horoscope buttons](./screenshots/Horoscope1.jpg)
+![horoscope prediction](./screenshots/Horoscope2.jpg)
+
+## Predictions
+![quotes](./screenshots/Quotes1.jpg)
+
 
 # Templates
 
